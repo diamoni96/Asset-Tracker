@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "AI Clip Marker"
+version = "1.0.0"
+id = "artifacts/clip-marker"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19753
+
+[services.development]
+run = "pnpm --filter @workspace/clip-marker run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/clip-marker", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/clip-marker/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19753"
+BASE_PATH = "/"
